@@ -1,0 +1,11 @@
+{
+  "name": "paper-pilot-backend",
+  "version": "1.0.0",
+  "description": "Backend service for PaperPilot – Fast, reliable question paper generation for Indian schools and coaching institutes.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
