@@ -3,7 +3,7 @@ const app = express();
 const port = 3000; // Change this to your desired port
 
 const mongoose = require('mongoose');
-mongoose.connect('<your-db-url>', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://admin123:admin123@paperpilot.7xgba1u.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
