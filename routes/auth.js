@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Teacher = require('../models/Teacher');
-
+ 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
