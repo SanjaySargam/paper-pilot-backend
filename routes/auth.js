@@ -1,16 +1,9 @@
 const express = require('express');
+const { register, login } = require('../controllers/Auth');
 const router = express.Router();
 const Teacher = require('../models/Teacher');
  
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-
-  const teacher = await Teacher.findOne({ email, password }); // plaintext for simplicity
-  if (!teacher) {
-    return res.status(400).json({ message: 'Invalid credentials' });
-  }
-
-  res.json({ message: 'Login successful', teacher });
-});
+router.post('/register-school', register);
+router.post('/login', login);
 
 module.exports = router;

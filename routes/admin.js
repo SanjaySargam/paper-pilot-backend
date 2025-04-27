@@ -4,7 +4,7 @@ const School = require('../models/School');
 const Teacher = require('../models/Teacher');
 
 // Register school
-router.post('/register-school', async (req, res) => {
+router.post('/register', async (req, res) => {
   const { name, address, email } = req.body;
   const school = new School({ name, address, email });
   await school.save();
