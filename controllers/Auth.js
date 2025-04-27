@@ -7,8 +7,8 @@ const register = async (req, res, next) => {
   const { schoolName, email, password, address } = req.body;
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const school = new School({ schoolName, email, address, password: hashedPassword });
+    // const hashedPassword = await bcrypt.hash(password, 10);
+    const school = new School({ schoolName, email, address, password });
     await school.save();
     res.json({ message: 'Registration successful' });
   } catch (error) {
