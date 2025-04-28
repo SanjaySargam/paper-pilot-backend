@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const School = require('../models/School');
 
 // Register a new school
