@@ -66,7 +66,7 @@ exports.registerSchool = async (req, res) => {
   
       jwt.sign(
         payload,
-        config.jwtSecret,
+        process.env.SECRET_KEY,
         { expiresIn: config.jwtExpiration },
         (err, token) => {
           if (err) {
@@ -121,7 +121,7 @@ exports.loginUser = async (req, res) => {
 
     jwt.sign(
       payload,
-      config.jwtSecret,
+      process.env.SECRET_KEY,
       { expiresIn: config.jwtExpiration },
       (err, token) => {
         if (err) throw err;
