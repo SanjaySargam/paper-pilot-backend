@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const checkRole = require('../middleware/checkRole');
 
 // Create a new teacher - admin only
-router.post('/', auth, checkRole('admin'), teacherController.createTeacher);
+router.post('/createTeacher', auth, checkRole('admin'), teacherController.createTeacher);
 
 // Get all teachers for a school - admin only
 router.get('/', auth, checkRole('admin'), teacherController.getAllTeachers);
