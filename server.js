@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 
 const connectDB = require('./config/db');
 const cors = require('cors');
+const Question = require('./models/Question');
 
 const corsOptions ={
    origin:'*', 
@@ -26,6 +27,33 @@ app.use(cors(corsOptions)) // Use this after the variable declaration
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/teachers', require('./routes/teacherRoutes'));
 app.use('/api/schools', require('./routes/schoolRoutes'));
+
+app.post('/api/questions', async (req, res) => {
+  try {
+    const question = new Question(req.body);
+    await question.save();
+    res.status(201).send(question);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+app.get('/api/questionss', async (req, res) => {
+  try {
+    const { type, marks, subjectName, standard } = req.query;
+    let query = {};
+    if (type) query.type = type;
+    if (marks) query.marks = marks;
+    if (subjectName) query.subjectName = subjectName;
+    if (standard) query.standard = standard;
+
+    
+    const questions = await Question.find(query);
+    res.send(questions);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
