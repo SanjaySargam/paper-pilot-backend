@@ -38,6 +38,22 @@ app.post('/api/questions', async (req, res) => {
   }
 });
 
+app.post('/api/manyquestions', async (req, res) => {
+  try {
+    const questions = req.body;
+
+    if (!Array.isArray(questions)) {
+      return res.status(400).send("Request body must be an array of questions");
+    }
+
+    const savedQuestions = await Question.insertMany(questions);
+    res.status(201).send(savedQuestions);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+
 app.get('/api/questionss', async (req, res) => {
   try {
     const { type, marks, subjectName, standard } = req.query;
