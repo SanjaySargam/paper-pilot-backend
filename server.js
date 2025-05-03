@@ -56,12 +56,13 @@ app.post('/api/manyquestions', async (req, res) => {
 
 app.get('/api/questionss', async (req, res) => {
   try {
-    const { type, marks, subjectName, standard } = req.query;
+    const { type, marks, subjectName, standard, chapterNo } = req.query;
     let query = {};
     if (type) query.type = type;
     if (marks) query.marks = marks;
     if (subjectName) query.subjectName = subjectName;
     if (standard) query.standard = standard;
+    if (chapterNo) query.chapterNo = chapterNo;
 
     
     const questions = await Question.find(query);
