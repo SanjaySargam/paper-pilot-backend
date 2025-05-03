@@ -125,7 +125,17 @@ exports.loginUser = async (req, res) => {
       { expiresIn: config.jwtExpiration },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+
+        // Send token and user details in response
+        res.json({
+          token,
+          user: {
+            id: user._id,
+            email: user.email,
+            role: user.role,
+            schoolId: user.schoolId
+          }
+        });
       }
     );
   } catch (err) {
@@ -133,6 +143,7 @@ exports.loginUser = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
 
 // Get authenticated user
 exports.getAuthUser = async (req, res) => {
