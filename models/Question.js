@@ -22,7 +22,7 @@ const questionSchema = new mongoose.Schema({
     required: true
   },
   standard: {
-    type: Number, // or Number if standards are always numeric
+    type: String, // or Number if standards are always numeric
     required: true
   },
   chapterNo: {
