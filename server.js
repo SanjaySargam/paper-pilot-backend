@@ -40,10 +40,13 @@ app.post('/api/questions', async (req, res) => {
 
 app.get('/api/questionss', async (req, res) => {
   try {
-    const { type, marks } = req.query;
+    const { type, marks, subjectName, standard } = req.query;
     let query = {};
     if (type) query.type = type;
     if (marks) query.marks = marks;
+    if (subjectName) query.subjectName = subjectName;
+    if (standard) query.standard = standard;
+
     
     const questions = await Question.find(query);
     res.send(questions);
