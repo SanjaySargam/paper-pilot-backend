@@ -14,7 +14,7 @@ const questionSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['mcq', 'short', 'scientific_reason', 'medium', 'long', 'optional'],
+    enum: ['mcq', 'short', 'scientific_reason', 'medium', 'long', 'optional', 'fill'],
     required: true
   },
   subjectName: {
