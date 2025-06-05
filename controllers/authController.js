@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 const User = require('../models/User');
 const School = require('../models/School');
+const Teacher = require('../models/Teacher');
 
 // Register a new school with admin
 exports.registerSchool = async (req, res) => {
@@ -149,9 +150,24 @@ exports.loginUser = async (req, res) => {
 exports.getAuthUser = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // If the role is teacher, return teacher details instead
+    if (user.role === 'teacher') {
+      const teacher = await Teacher.findOne({ userId: user._id }).select('-password');
+      if (!teacher) {
+        return res.status(404).json({ message: 'Teacher details not found' });
+      }
+      return res.json(teacher);
+    }
+
+    // Otherwise return the regular user
     res.json(user);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
   }
 };
+
