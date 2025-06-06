@@ -154,20 +154,23 @@ exports.getAuthUser = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // If the role is teacher, return teacher details instead
     if (user.role === 'teacher') {
-      const teacher = await Teacher.findOne({ userId: user._id }).select('-password');
+      const teacher = await Teacher.findOne({ userId: user._id })
+        .populate('schoolId') // This will include full school details
+        .select('-password');
+
       if (!teacher) {
         return res.status(404).json({ message: 'Teacher details not found' });
       }
+
       return res.json(teacher);
     }
 
-    // Otherwise return the regular user
     res.json(user);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
   }
 };
+
 
