@@ -10,7 +10,11 @@ exports.createTeacher = async (req, res) => {
     // Check if email already exists
     let existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: 'Teacher already exists with this email' });
+      return res.status(400).json({ 
+        success: false,
+        status: 'error',
+        message: 'Teacher already exists with this email' 
+      });
     }
 
     // Generate random password for teacher
@@ -39,14 +43,22 @@ exports.createTeacher = async (req, res) => {
     await teacher.save();
 
     res.status(201).json({
+      success: true,
+      status: 'success',
+      message: 'Teacher created successfully',
       teacher,
-      generatedPassword: password // Send back the generated password
+      generatedPassword: password
     });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ 
+      success: false,
+      status: 'error',
+      message: 'Server error' 
+    });
   }
 };
+
 
 // Get all teachers for a school
 exports.getAllTeachers = async (req, res) => {
