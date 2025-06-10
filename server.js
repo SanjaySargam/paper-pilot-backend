@@ -22,55 +22,15 @@ const app = express();
 app.use(cors());
 app.use(express.json({ extended: false }));
 app.use(cors(corsOptions)) // Use this after the variable declaration
+const questionRoutes = require('./routes/questionsRoutes');
 
 // Define Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/teachers', require('./routes/teacherRoutes'));
 app.use('/api/schools', require('./routes/schoolRoutes'));
-
-app.post('/api/questions', async (req, res) => {
-  try {
-    const question = new Question(req.body);
-    await question.save();
-    res.status(201).send(question);
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-});
-
-app.post('/api/manyquestions', async (req, res) => {
-  try {
-    const questions = req.body;
-
-    if (!Array.isArray(questions)) {
-      return res.status(400).send("Request body must be an array of questions");
-    }
-
-    const savedQuestions = await Question.insertMany(questions);
-    res.status(201).send(savedQuestions);
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-});
+app.use(questionRoutes);
 
 
-app.get('/api/questionss', async (req, res) => {
-  try {
-    const { type, marks, subjectName, standard, chapterNo } = req.query;
-    let query = {};
-    if (type) query.type = type;
-    if (marks) query.marks = marks;
-    if (subjectName) query.subjectName = subjectName;
-    if (standard) query.standard = standard;
-    if (chapterNo) query.chapterNo = chapterNo;
-
-    
-    const questions = await Question.find(query);
-    res.send(questions);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
